@@ -391,7 +391,7 @@
                         }
                         $aExtraParams['action']='register';
                         $aExtraParams['lang']=$sLanguage;
-                        $sHtmlRegisterform = CHtml::form(array(Yii::app()->createUrl("/survey/index/sid/{$iSurveyId}",$aExtraParams)), 'post');
+                        $sHtmlRegisterform = CHtml::form(Yii::app()->createUrl("/survey/index/sid/{$iSurveyId}",$aExtraParams), 'post');
                         $sHtmlRegisterform.="<table class='register'><tbody>\n";
                         $sHtmlRegisterform.=  "<tr><th><label for='register_firstname'>".$clang->gT("First name") . "</label></th><td>".CHtml::textField('register_firstname',htmlentities($sR_firstname, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
                         $sHtmlRegisterform.=  "<tr><th><label for='register_lastname'>".$clang->gT("Last name") . "</label></th><td>".CHtml::textField('register_lastname',htmlentities($sR_lastname, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
