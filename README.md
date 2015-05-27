@@ -1,7 +1,7 @@
 replaceRegister
 ==================
 
-A plugin for LimeSurvey with some extra option for Register. This plugin is a starting point to do another update in regsitering.
+A plugin for LimeSurvey with some extra option for Register. This plugin is a starting point to do another update in registering. Actually : the plugin allow to send a new email for already registered user.
 
 ## Installation
 
