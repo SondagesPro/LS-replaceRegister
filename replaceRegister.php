@@ -3,10 +3,9 @@
  * Replace teh default register system by own system
  *
  * @author Denis Chenu <denis@sondages.pro>
- * @copyright 2013 Denis Chenu <http://www.sondages.pro>
- * @copyright 2013 LimeSurvey Team <http://www.limesurvey.org>
+ * @copyright 2013-2015 Denis Chenu <http://www.sondages.pro>
  * @license GPL v3
- * @version 1.0
+ * @version 2.0
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
