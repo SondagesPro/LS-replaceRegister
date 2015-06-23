@@ -169,12 +169,11 @@
                     {
                         $sLanguage = Survey::model()->findByPk($iSurveyId)->language;
                     }
-                    $clang=Yii::app()->lang = new Limesurvey_lang($sLanguage);
                     $aSurveyInfo=getSurveyInfo($iSurveyId,$sLanguage);
                     $sAction= Yii::app()->request->getParam('action','view') ;
                     $sHtmlRegistererror="";
-                    $sHtmlRegistermessage1=$clang->gT("You must be registered to complete this survey");;
-                    $sHtmlRegistermessage2=$clang->gT("You may register for this survey if you wish to take part.")."<br />\n".$clang->gT("Enter your details below, and an email containing the link to participate in this survey will be sent immediately.");
+                    $sHtmlRegistermessage1=gT("You must be registered to complete this survey");;
+                    $sHtmlRegistermessage2=gT("You may register for this survey if you wish to take part.")."<br />\n".gT("Enter your details below, and an email containing the link to participate in this survey will be sent immediately.");
                     $sHtmlRegisterform="";
                     $sHtml="";
                     $bShowForm=true;
@@ -216,19 +215,19 @@
                             //Check that the email is a valid style addressattribute_2
                             if (!validateEmailAddress($sR_email))
                             {
-                                $aRegisterError[]= $clang->gT("The email you used is not valid. Please try again.");
+                                $aRegisterError[]= gT("The email you used is not valid. Please try again.");
                             }
                         }
                         else
                         {
-                            $aRegisterError[]= $clang->gT("The email you used is not valid. Please try again.");// Empty email
+                            $aRegisterError[]= gT("The email you used is not valid. Please try again.");// Empty email
                         }
                         // Fill and validate mandatory extra attribute
                         foreach ($aSurveyInfo['attributedescriptions'] as $field => $aAttribute)
                         {
                             if (!empty($aAttribute['show_register']) && $aAttribute['show_register'] == 'Y' && $aAttribute['mandatory'] == 'Y' && ($aR_attribute[$field]=="" || is_null($aR_attribute[$field])) )
                             {
-                                $aRegisterError[]= sprintf($clang->gT("%s cannot be left empty").".", $aSurveyInfo['attributecaptions'][$field]);
+                                $aRegisterError[]= sprintf(gT("%s cannot be left empty").".", $aSurveyInfo['attributecaptions'][$field]);
                             }
                         }
                         // Check the security question's answer : at end because the security question is the last one
@@ -236,7 +235,7 @@
                         {
                             if (!$sLoadsecurity || !$sSecAnswer || $sLoadsecurity != $sSecAnswer)
                             {
-                                $aRegisterError[]= $clang->gT("The answer to the security question is incorrect.");
+                                $aRegisterError[]= gT("The answer to the security question is incorrect.");
                             }
                         }
                         if(count($aRegisterError)==0)
@@ -289,7 +288,7 @@
                                 TokenDynamic::model($iSurveyId)->createToken($iTokenId);// Review if really create a token
                                 $aMail['subject']=$aSurveyInfo['email_register_subj'];
                                 $aMail['message']=$aSurveyInfo['email_register'];
-                                $aMail['information']=$clang->gT("An email has been sent to the address you provided with access details for this survey. Please follow the link in that email to proceed.");
+                                $aMail['information']=gT("An email has been sent to the address you provided with access details for this survey. Please follow the link in that email to proceed.");
                             }
                         }
                     }
@@ -343,18 +342,18 @@
                             $oToken->sent=$today;
                             $oToken->save();
                             $sReturnHtml="<div id='wrapper' class='message tokenmessage'>"
-                                . "<p>".$clang->gT("Thank you for registering to participate in this survey.")."</p>\n"
+                                . "<p>".gT("Thank you for registering to participate in this survey.")."</p>\n"
                                 . "<p>".$aMail['information']."</p>\n"
-                                . "<p>".$clang->gT("Survey administrator")." {ADMINNAME} ({ADMINEMAIL})</p>"
+                                . "<p>".gT("Survey administrator")." {ADMINNAME} ({ADMINEMAIL})</p>"
                                 . "</div>\n";
 
                         }
                         else
                         {
                             $sReturnHtml="<div id='wrapper' class='message tokenmessage'>"
-                                . "<p>".$clang->gT("Thank you for registering to participate in this survey.")."</p>\n"
+                                . "<p>".gT("Thank you for registering to participate in this survey.")."</p>\n"
                                 . "<p>"."We can not sent you an email actually, please contact the survey administrator"."</p>\n"
-                                . "<p>".$clang->gT("Survey administrator")." {ADMINNAME} ({ADMINEMAIL})</p>"
+                                . "<p>".gT("Survey administrator")." {ADMINNAME} ({ADMINEMAIL})</p>"
                                 . "</div>\n";
                         
                         }
@@ -393,9 +392,9 @@
                         $aExtraParams['lang']=$sLanguage;
                         $sHtmlRegisterform = CHtml::form(Yii::app()->createUrl("/survey/index/sid/{$iSurveyId}",$aExtraParams), 'post');
                         $sHtmlRegisterform.="<table class='register'><tbody>\n";
-                        $sHtmlRegisterform.=  "<tr><th><label for='register_firstname'>".$clang->gT("First name") . "</label></th><td>".CHtml::textField('register_firstname',htmlentities($sR_firstname, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
-                        $sHtmlRegisterform.=  "<tr><th><label for='register_lastname'>".$clang->gT("Last name") . "</label></th><td>".CHtml::textField('register_lastname',htmlentities($sR_lastname, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
-                        $sHtmlRegisterform.=  "<tr class='mandatory'><th><label for='register_email'>".$clang->gT("Email address") . "</label></th><td>".CHtml::textField('register_email',htmlentities($sR_email, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
+                        $sHtmlRegisterform.=  "<tr><th><label for='register_firstname'>".gT("First name") . "</label></th><td>".CHtml::textField('register_firstname',htmlentities($sR_firstname, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
+                        $sHtmlRegisterform.=  "<tr><th><label for='register_lastname'>".gT("Last name") . "</label></th><td>".CHtml::textField('register_lastname',htmlentities($sR_lastname, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
+                        $sHtmlRegisterform.=  "<tr class='mandatory'><th><label for='register_email'>".gT("Email address") . "</label></th><td>".CHtml::textField('register_email',htmlentities($sR_email, ENT_QUOTES, 'UTF-8'),array('class'=>'text'))."</td></tr>\n";
                         // Extra attribute
                         foreach ($aSurveyInfo['attributedescriptions'] as $field => $aAttribute)
                         {
@@ -405,8 +404,8 @@
                             }
                         }
                         if (function_exists("ImageCreate") && isCaptchaEnabled('registrationscreen', $aSurveyInfo['usecaptcha']))
-                            $sHtmlRegisterform.= "<tr><th><label for='loadsecurity'>" . $clang->gT("Security question") . "</label></th><td><img src='".Yii::app()->getController()->createUrl("/verification/image/sid/{$iSurveyId}")."' alt='' /><input type='text' size='5' maxlength='3' name='loadsecurity' id='loadsecurity' value='' /></td></tr>\n";
-                        $sHtmlRegisterform.= "<tr><td></td><td>".CHtml::submitButton($clang->gT("Continue"))."</td></tr>";
+                            $sHtmlRegisterform.= "<tr><th><label for='loadsecurity'>" . gT("Security question") . "</label></th><td><img src='".Yii::app()->getController()->createUrl("/verification/image/sid/{$iSurveyId}")."' alt='' /><input type='text' size='5' maxlength='3' name='loadsecurity' id='loadsecurity' value='' /></td></tr>\n";
+                        $sHtmlRegisterform.= "<tr><td></td><td>".CHtml::submitButton(gT("Continue"))."</td></tr>";
                         $sHtmlRegisterform.= "</tbody></table>\n";
                         $sHtmlRegisterform.= makeLanguageChangerSurvey($sLanguage);// Need to be inside the form
                         $sHtmlRegisterform.= CHtml::endForm();
