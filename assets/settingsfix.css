@@ -1,0 +1,14 @@
+/*!
+ * Style
+ *
+ * Copyright 2015 Denis Chenu <http://www.sondages.pro>
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+#addnewsurvey li.select2-search-choice,
+
+#addnewsurvey li.select2-search-field {
+clear:none;
+}
+#s2id_plugin_replaceRegister_aDuplicateControl{min-width:20em}
