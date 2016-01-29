@@ -75,6 +75,24 @@
             $this->subscribe('beforeSurveySettings');
             $this->subscribe('newSurveySettings');
         }
+        /**
+         * Get the transalation of options in plugin settings
+         * See ls\pluginmanager\iPlugin\getPluginSettings interface
+         */
+        public function getPluginSettings($getValues = true)
+        {
+            foreach($this->settings as $setting=>$aValues)
+            {
+                if(!empty($aValues['options']))
+                {
+                    foreach($aValues['options'] as $key=>$value)
+                    {
+                        $this->settings[$setting]['options'][$key]=gt($value);
+                    }
+                }
+            }
+            return parent::getPluginSettings($getValues);
+        }
         function __init(){
             $bUse=$this->get('bUse');
             if(!is_null($bUse))
@@ -107,8 +125,8 @@
                 'bUse' => array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'default'=>$this->bUse,
                     'tab'=>'tokens', // Setting no used yet
@@ -118,8 +136,8 @@
                 'bRedirectWithout' => array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'tab'=>'tokens', // Setting no used yet
                     'label' => 'Go to the survey after registering',
@@ -128,8 +146,8 @@
                 'bShowTokenForm' => array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'default'=>$this->bShowTokenForm,
                     'tab'=>'tokens', // Setting no used yet
@@ -139,8 +157,8 @@
                 'bConfirmEmail' => array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'default'=>$this->bConfirmEmail,
                     'tab'=>'tokens', // Setting no used yet
@@ -150,9 +168,9 @@
                 'sEmailTemplate' => array(
                     'type' => 'select',
                     'options'=>array(
-                        "register"=>"Registration",
-                        "invite"=>"Invitation",
-                        "remind"=>"Reminder",
+                        "register"=>gt("Registration"),
+                        "invite"=>gt("Invitation"),
+                        "remind"=>gt("Reminder"),
                         "none"=>"None (don't send an email, and show an error)",
                     ),
                     'default'=>$this->sEmailTemplate,
@@ -163,8 +181,8 @@
                 'bFirstnameMandatroy'=>array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'tab'=>'tokens', // Setting no used yet
                     'label' => 'Set firstname mandatory',
@@ -173,8 +191,8 @@
                 'bLastnameMandatroy'=>array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'tab'=>'tokens', // Setting no used yet
                     'label' => 'Set lastname mandatory',
@@ -183,8 +201,8 @@
                 'bEmailMandatroy'=>array(
                     'type' => 'select',
                     'options'=>array(
-                        0=>'No',
-                        1=>'Yes'
+                        0=>gt('No'),
+                        1=>gt('Yes')
                     ),
                     'tab'=>'tokens', // Setting no used yet
                     'label' => 'Email is mandatory',
