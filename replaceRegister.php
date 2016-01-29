@@ -347,6 +347,9 @@
                 $bUse=$this->bUse;
             if(!$bUse)
                 return;
+            //Deactivate for preview
+            if(Yii::app()->request->getQuery('action')=='previewgroup' || Yii::app()->request->getQuery('action')=='previewgroup')
+                return;
 
             $sToken= Yii::app()->request->getParam('token');
             // Test and add error for invalid token
@@ -356,7 +359,7 @@
             {
                 // Get the survey model
                 $oSurvey=Survey::model()->find("sid=:sid",array(':sid'=>$iSurveyId));
-                if($oSurvey && $oSurvey->active=="Y" && $oSurvey->allowregister=="Y" && tableExists("tokens_{$iSurveyId}"))
+                if($oSurvey && $oSurvey->allowregister=="Y" && tableExists("tokens_{$iSurveyId}"))
                 {
                     // Fill parameters
                     $bShowTokenForm=$this->get('bShowTokenForm', 'Survey', $iSurveyId,$this->bShowTokenForm);
@@ -758,21 +761,21 @@
                         {
                             unset($aExtraParams['action']);
                             $aExtraParams['lang']=$sLanguage;
-                            $sHtmlExtraform = CHtml::form(Yii::app()->createUrl("/survey/index",$aExtraParams), 'post',array('id'=>'tokenform'));
+                            $sHtmlTokenform = CHtml::form(Yii::app()->createUrl("/survey/index",$aExtraParams), 'post',array('id'=>'tokenform'));
                             $sTokenMessage=trim($this->get('sDescriptionToken', 'Survey', $iSurveyId,""));
                             if(empty($sTokenMessage))
                                 $sTokenMessage=gT("If you have been issued a token, please enter it in the box below and click continue.");
-                            $sHtmlExtraform .= CHtml::tag("p",array("id"=>'tokenmessage'),$sTokenMessage);
-                            $sHtmlExtraform .= CHtml::openTag("ul");
-                            $sHtmlExtraform .= CHtml::tag("li",array(), CHtml::label(gT("Token:"),"token").CHtml::passwordField("token","",array("id"=>"token",'required'=>true)));
+                            $sHtmlTokenform .= CHtml::tag("p",array("id"=>'tokenmessage'),$sTokenMessage);
+                            $sHtmlTokenform .= CHtml::openTag("ul");
+                            $sHtmlTokenform .= CHtml::tag("li",array(), CHtml::label(gT("Token:"),"token").CHtml::passwordField("token","",array("id"=>"token",'required'=>true)));
                             if (function_exists("ImageCreate") && isCaptchaEnabled('surveyaccessscreen', $aSurveyInfo['usecaptcha']))
                             {
                                 $sHtmlRegisterform .="<li>
                                 <label for='captchaimage'>".gT("Security Question")."</label><img id='captchaimage' src='".Yii::app()->getController()->createUrl('/verification/image/sid/'.$surveyid)."' alt='captcha' /><input type='text' size='5' maxlength='3' name='loadsecurity' value='' />
                                 </li>";
                             }
-                            $sHtmlExtraform .= CHtml::tag("li",array(), CHtml::hiddenField('sid',$iSurveyId).CHtml::hiddenField('newtest',"Y").CHtml::htmlButton(gT("Continue"),array("type"=>'submit','class'=>"submit button")));
-                            $sHtmlExtraform.= CHtml::endForm();
+                            $sHtmlTokenform .= CHtml::tag("li",array(), CHtml::hiddenField('sid',$iSurveyId).CHtml::hiddenField('newtest',"Y").CHtml::htmlButton(gT("Continue"),array("type"=>'submit','class'=>"submit button")));
+                            $sHtmlTokenform.= CHtml::endForm();
                         }
                     }
                     $sTemplatePath=$aData['templatedir'] = getTemplatePath($aSurveyInfo['template']);
@@ -795,8 +798,8 @@
                     echo templatereplace(file_get_contents($sTemplatePath.'/startpage.pstpl'),array(), $aData);
                     echo templatereplace(file_get_contents($sTemplatePath.'/survey.pstpl'),array(), $aData);
                     echo templatereplace($sHtmlRegister);
-                    if(!empty($sHtmlExtraform))
-                        echo CHtml::tag("div",array("id"=>'wrapper',"class"=>'wrapper-token form'),$sHtmlExtraform);
+                    if(!empty($sHtmlTokenform))
+                        echo CHtml::tag("div",array("id"=>'wrapper',"class"=>'wrapper-token form'),$sHtmlTokenform);
                     echo templatereplace(file_get_contents($sTemplatePath.'/endpage.pstpl'),array(), $aData);
                     doFooter();
                     ob_flush();
