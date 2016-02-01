@@ -15,6 +15,7 @@ A plugin for LimeSurvey with some extra option for Register. This plugin is a st
 
 ##Home page & Copyright
 - HomePage <http://wwww.sondages.pro/>
-- Copyright © 2013-2015 Denis Chenu <http://sondages.pro>
+- Copyright © 2013-2016 Denis Chenu <http://sondages.pro>
+- Alternate duplicate control and French version sponsored by Lycée Jules Guesde - Montpellier <http://julesguesde.fr/>
 
 Distributed under [GNU GENERAL PUBLIC LICENSE Version 3](http://www.gnu.org/licenses/gpl.txt) licence
