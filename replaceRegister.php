@@ -62,6 +62,182 @@
                     "none"=>"None (don't send an email, and show an error)",
                 )
             ),
+            'bRedirectWithout' => array(
+                'type' => 'select',
+                'options'=>array(
+                    0=>'No',
+                    1=>'Yes'
+                ),
+                'label' => 'Go to the survey after registering',
+                'default' => 0,
+            ),
+            'bConfirmEmail' => array(
+                'type' => 'select',
+                'options'=>array(
+                    0=>'No',
+                    1=>'Yes'
+                ),
+                'label' => 'Add an input for email confirmation',
+                'default' => 0,
+            ),
+            'bFirstnameMandatroy'=>array(
+                'type' => 'select',
+                'options'=>array(
+                    0=>'No',
+                    1=>'Yes'
+                ),
+                'label' => 'Set firstname mandatory',
+                'default' => 0,
+            ),
+            'bLastnameMandatroy'=>array(
+                'type' => 'select',
+                'options'=>array(
+                    0=>'No',
+                    1=>'Yes'
+                ),
+                'label' => 'Set lastname mandatory',
+                'default' => 0,
+            ),
+            'bEmailMandatroy'=>array(
+                'type' => 'select',
+                'options'=>array(
+                    0=>'No',
+                    1=>'Yes',
+                ),
+                'label' => 'Email is mandatory',
+                'default' => 1,
+            ),
+            'aDuplicateControl'=> array(
+                'type'=>'select',
+                'label'=>"Duplicates are determined by:",
+                'options'=>array(
+                    'firstname'=>'firtsname',
+                    'lastname'=>'lastname',
+                    'email'=>'email',
+                    'attribute_1'=>'attribute_1',
+                    'attribute_2'=>'attribute_2',
+                    'attribute_3'=>'attribute_3',
+                    'attribute_4'=>'attribute_4',
+                    'attribute_5'=>'attribute_5',
+                    'attribute_6'=>'attribute_6',
+                    'attribute_7'=>'attribute_7',
+                    'attribute_8'=>'attribute_8',
+                    'attribute_9'=>'attribute_8',
+                ),
+                'htmlOptions'=>array(
+                    'multiple'=>'multiple',
+                ),
+                'selectOptions'=>array(
+                    'width' => null,
+                    'minimumResultsForSearch'=> 5,
+                ),
+                'default'=>array('email'),
+            ),
+            'sAttributeDate' => array(
+                'type'=>'select',
+                'label'=>"Attribute with date (if exist in survey, must be show at register)",
+                'options'=>array(
+                    'attribute_1'=>'attribute_1',
+                    'attribute_2'=>'attribute_2',
+                    'attribute_3'=>'attribute_3',
+                    'attribute_4'=>'attribute_4',
+                    'attribute_5'=>'attribute_5',
+                    'attribute_6'=>'attribute_6',
+                    'attribute_7'=>'attribute_7',
+                    'attribute_8'=>'attribute_8',
+                    'attribute_9'=>'attribute_8',
+                ),
+                'htmlOptions'=>array(
+                    'empty'=>"None",
+                ),
+            ),
+            'sAttributeDateMin' => array(
+                'type'=>'string',
+                'label'=>"Date minimum",
+                'help'=>"You can use PHP expression (ie : 18 years ago), defaut to 100 years ago",
+                'default' => "",
+            ),
+            'sAttributeDateMax' => array(
+                'type'=>'string',
+                'label'=>"Date maximum",
+                'help'=>"You can use PHP expression (ie : 18 years ago), defaut to now",
+                'default' => "",
+            ),
+            'sPrefillWithDate' => array(
+                'type'=>'select',
+                'label'=>"Attribute to prefill with date",
+                'options'=>array(
+                    'attribute_1'=>'attribute_1',
+                    'attribute_2'=>'attribute_2',
+                    'attribute_3'=>'attribute_3',
+                    'attribute_4'=>'attribute_4',
+                    'attribute_5'=>'attribute_5',
+                    'attribute_6'=>'attribute_6',
+                    'attribute_7'=>'attribute_7',
+                    'attribute_8'=>'attribute_8',
+                    'attribute_9'=>'attribute_8',
+                ),
+                'htmlOptions'=>array(
+                    'empty'=>"None",
+                ),
+            ),
+            'sPrefillDateSystem' => array(
+                'type'=>'select',
+                'label'=>"Date format to prefill (if exist in survey, must not ne shown at register.",
+                'options'=>array(
+                    'year'=>"This year",
+                    'school'=>"School year (July to July)",
+                    'monthyear'=>"Mont + year : MM-DD",
+                    'all'=>"Complet : YYYY-MM-DD",
+
+                ),
+                'default' => 'school',
+            ),
+            'sPrefillDateDuplicate' => array(
+                'type'=>'select',
+                'label'=>"Use it for duplicate",
+                'options'=>array(
+                    0=>'No',
+                    1=>'Yes'
+                ),
+                'default' => 1,
+            ),
+            'sDescriptionText' => array(
+                'type'=>'html',
+                'label'=>'Description of the form',
+                'help'=>'Replace the default description from LimeSurvey',
+                'default'=>"",
+            ),
+            'sErrorCompleted' => array(
+                'type'=>'string',
+                'label'=>'Error sentence to show if survey is already completed',
+                'default'=>"The email address you have entered is already registered an the questionnaire has been completed.",
+            ),
+            'sErrorOptoput' => array(
+                'type'=>'string',
+                'label'=>'Error sentence to show if email is set but user ask to not reive new email',
+                'default'=> "This email address is already registered but someone ask to don't receive new email again.",
+            ),
+            'sErrorBounced'=> array(
+                'type'=>'string',
+                'label'=>'Error sentence to show if email is bouced (on error)',
+                'default'=>"This email address is already registered but the email adress was bounced.",
+            ),
+            'sErrorNoemail' => array(
+                'type'=>'string',
+                'label'=>'Error sentence to show if email is not set with information provided',
+                'default'=>"The information you have entered is already registered but no email is set.",
+            ),
+            'sSuccessRegistred'=> array(
+                'type'=>'string',
+                'label'=>'Sentence to show if email is already registred, when sending a new email',
+                'default'=>"The address you have entered is already registered. An email has been sent to this address with a link that gives you access to the survey.",
+            ),
+            'sDescriptionToken'=> array(
+                'type'=>'html',
+                'label'=>'Description of the token form',
+                'help' => 'Default, translated : "If you have been issued a token, please enter it in the box below and click continue."',
+            ),
         );
         public function init() {
             $this->subscribe('beforeSurveyPage');
@@ -132,7 +308,7 @@
                     ),
                     'tab'=>'tokens', // Setting no used yet
                     'label' => 'Go to the survey after registering',
-                    'current' => $this->getSurveySetting('bRedirectWithout', $iSurveyId,0),
+                    'current' => $this->getSurveySetting('bRedirectWithout', $iSurveyId),
                 ),
                 'bShowTokenForm' => array(
                     'type' => 'select',
@@ -152,7 +328,7 @@
                     ),
                     'tab'=>'tokens', // Setting no used yet
                     'label' => 'Add an input for email confirmation',
-                    'current' => $this->getSurveySetting('bConfirmEmail', $iSurveyId,0),
+                    'current' => $this->getSurveySetting('bConfirmEmail', $iSurveyId),
                 ),
                 'sEmailTemplate' => array(
                     'type' => 'select',
@@ -839,12 +1015,18 @@
             }
             $sAttributeTokenControl=$this->getSurveySetting('aDuplicateControl', $iSurveyId);
             if(is_null($sAttributeTokenControl))
+            {
                 $aDuplicateControl=array('email');
-            else
+            }
+            elseif(is_string($sAttributeTokenControl))
             {
                 $aDuplicateControl=json_decode($sAttributeTokenControl);
-                $aDuplicateControl=array_intersect ($aDuplicateControl,array_keys($aAttributeToken));
             }
+            elseif(is_array($sAttributeTokenControl))
+            {
+                $aDuplicateControl=$sAttributeTokenControl;
+            }
+            $aDuplicateControl=array_intersect ($aDuplicateControl,array_keys($aAttributeToken));
             if(empty($aDuplicateControl))
             {
                 $aDuplicateControl=array('email');
